@@ -12,6 +12,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));// to serve static files
 
+app.get("/", (req, res) => {
+  res.send("Caption Generator Backend is running!");
+});
+
 app.post("/generate", async (req, res) => {
     const { prompt } = req.body;
     console.log("Received prompt: ", prompt);
