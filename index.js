@@ -28,8 +28,13 @@ app.post("/generate", async (req, res) => {
             "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
         },
         body: JSON.stringify({
-          model: "text-davinci-003",
-          prompt,
+          model: "gpt-3.5-turbo",
+          messages: [
+            { 
+              role:"user",
+              content: prompt
+            }
+            ],
           max_tokens: 80,
           temperature: 0.7,
         })
