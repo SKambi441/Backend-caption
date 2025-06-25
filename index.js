@@ -37,11 +37,18 @@ app.post("/generate", async (req, res) => {
     
     const data = await response.json();
     console.log("OpenAI response: ", data);
+
+    if (data&& data.choices && data.choices.length > 0) {
+      const caption = data.choices[0].text.trim();
+      res.json({ caption});
+    } else {
+      console.error("OpenAI API returned unexpected response:", data);
+      res.status(500).json({error:"Unexpected response from OpenAI API."});
+    }
     
-    res.json(data.choices[0].text.trim());
   } catch (error) {
     console.error("Error from OpenAI API: ", error);
-    res.status(500).send({ error: "Error generating caption" });
+    res.status(500).json({ error: "Error generating caption" });
   }
 });
 
